@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class StudentRequestDto {
+public class StudentRequestDTO {
 
     @NotBlank(message = "Student name is required")
     private String studentName;
@@ -21,5 +21,5 @@ public class StudentRequestDto {
     private String mobileNumber;
 
     @NotBlank(message = "School name is required")
-    private String SchoolName;
+    private String schoolName;
 }

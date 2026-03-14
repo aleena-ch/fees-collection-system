@@ -22,7 +22,7 @@ public class Student {
     private Long id;
 
     @Column(name = "student_id",unique = true,nullable = false)
-    private int studentId;
+    private String studentId;
 
     @Column(name = "student_name",nullable = false)
     private String studentName;
@@ -34,7 +34,7 @@ public class Student {
     private String mobileNumber;
 
     @Column(name = "school_name",nullable = false)
-    private String SchoolName;
+    private String schoolName;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

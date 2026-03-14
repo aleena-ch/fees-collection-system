@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentResponseDto {
+public class StudentResponseDTO {
 
     private String studentId;
     private String studentName;
     private String grade;
     private String mobileNumber;
-    private String SchoolName;
+    private String schoolName;
     private LocalDateTime createdAt;
 
 }
