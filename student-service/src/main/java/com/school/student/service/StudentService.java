@@ -49,7 +49,7 @@ public class StudentService {
     @Transactional(readOnly = true)
     public StudentResponseDTO getStudentById(String studentId) {
         Student student = repository.findByStudentId(studentId)
-                .orElseThrow();
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id : " + studentId));
         return toResponseDTO(student);
     }
 
