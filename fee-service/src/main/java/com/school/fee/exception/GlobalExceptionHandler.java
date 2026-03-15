@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
                         409));
     }
 
-    @ExceptionHandler(ServiceUnavailableException.class)
-    public ResponseEntity<ErrorResponse> handleServiceUnavailableException(ServiceUnavailableException ex) {
+    @ExceptionHandler(StudentServiceUnavailableException.class)
+    public ResponseEntity<ErrorResponse> handleServiceUnavailableException(StudentServiceUnavailableException ex) {
         return ResponseEntity
                 .status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(ErrorResponse.buildError(
