@@ -1,5 +1,6 @@
 package com.school.fee.dto;
 
+import com.school.fee.model.FeeType;
 import com.school.fee.model.PaymentMode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class FeeRequestDTO {
     private String studentId;
 
     @NotNull(message = "Fee type is required")
-    private String feeType;
+    private FeeType feeType;
 
     @NotNull(message = "Amount is required")
     @Positive(message = "Amount must be greater than zero")

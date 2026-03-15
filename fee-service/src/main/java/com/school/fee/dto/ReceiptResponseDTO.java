@@ -36,7 +36,7 @@ public class ReceiptResponseDTO {
     private String cardNumber;
     private String cardType;
     private String transactionReference;
-    private PaymentStatus status;
+    private PaymentStatus paymentStatus;
 
     private String academicYear;
     private String feeMonth;

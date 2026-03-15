@@ -22,7 +22,7 @@ public class FeeReceipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "receipt_number", unique = true, nullable = false)
+    @Column(name = "receipt_number", unique = true)
     private String receiptNumber;
 
     @CreationTimestamp
