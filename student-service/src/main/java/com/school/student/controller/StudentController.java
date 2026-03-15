@@ -22,7 +22,7 @@ public class StudentController {
     private final StudentService service;
 
     @PostMapping
-    private ResponseEntity<StudentResponseDTO> addStudent(@Valid @RequestBody StudentRequestDTO request) {
+    public ResponseEntity<StudentResponseDTO> addStudent(@Valid @RequestBody StudentRequestDTO request) {
 
         log.info("Request to add student: {}", request.getStudentName());
         StudentResponseDTO responseDTO = service.addStudent(request);
@@ -32,7 +32,7 @@ public class StudentController {
     }
 
     @GetMapping
-    private ResponseEntity<Page<StudentResponseDTO>> getAllStudents(
+    public ResponseEntity<Page<StudentResponseDTO>> getAllStudents(
             @RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int size) {
         log.info("Request to get all student details");
         Pageable pageable = PageRequest.of(pageNumber, size);
@@ -41,7 +41,7 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    private ResponseEntity<StudentResponseDTO> getStudent(@PathVariable String studentId) {
+    public ResponseEntity<StudentResponseDTO> getStudent(@PathVariable String studentId) {
         log.info("Request to get student details with Id: {}", studentId);
         StudentResponseDTO responseDTO = service.getStudentById(studentId);
         return ResponseEntity.ok(responseDTO);
