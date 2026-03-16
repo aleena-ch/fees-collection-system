@@ -52,7 +52,7 @@ public class StudentService {
 
         Student updated = repository.save(savedStudent);
         log.info("Saved student with ID : {}", updated.getStudentId());
-        return toResponseDTO(savedStudent);
+        return toResponseDTO(updated);
     }
 
     /**
