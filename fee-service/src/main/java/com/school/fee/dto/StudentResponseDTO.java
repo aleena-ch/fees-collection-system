@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * DTO for receiving student data from
+ * Student Service via Feign Client.
+ * Fields must match Student Service
+ * StudentResponseDTO exactly.
+ */
 @Data
 @Builder
 @NoArgsConstructor

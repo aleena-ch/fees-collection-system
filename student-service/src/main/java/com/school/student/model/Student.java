@@ -21,21 +21,22 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "student_id",unique = true)
+    @Column(name = "student_id", unique = true)
     private String studentId;
 
-    @Column(name = "student_name",nullable = false)
+    @Column(name = "student_name", nullable = false)
     private String studentName;
 
     @Column(nullable = false)
     private String grade;
 
-    @Column(name = "mobile_number",nullable = false,length = 15)
+    @Column(name = "mobile_number", nullable = false, length = 15)
     private String mobileNumber;
 
-    @Column(name = "school_name",nullable = false)
+    @Column(name = "school_name", nullable = false)
     private String schoolName;
 
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

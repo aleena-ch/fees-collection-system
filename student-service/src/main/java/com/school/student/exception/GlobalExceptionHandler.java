@@ -1,6 +1,7 @@
 package com.school.student.exception;
 
 import com.school.student.dto.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,31 +11,46 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(StudentNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(StudentNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleNotFoundException(
+            StudentNotFoundException exception) {
+        log.error("Student not found: {}", exception.getMessage());
+
         ErrorResponse errorResponse = ErrorResponse
-                .buildError(exception.getMessage(), "STUDENT_NOT_FOUND", HttpStatus.NOT_FOUND.value());
+                .buildError(exception.getMessage(),
+                        "STUDENT_NOT_FOUND",
+                        HttpStatus.NOT_FOUND.value());
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(errorResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> validationException(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorResponse> validationException(
+            MethodArgumentNotValidException exception) {
+
         String message = exception.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(e -> e.getField() + " : " + e.getDefaultMessage())
                 .collect(Collectors.joining(", "));
+
+        log.error("Validation failed: {}", message);
+
         ErrorResponse errorResponse = ErrorResponse
-                .buildError("Invalid input: " + message, "VALIDATION_ERROR", HttpStatus.BAD_REQUEST.value());
+                .buildError("Invalid input: " + message,
+                        "VALIDATION_ERROR",
+                        HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception exception) {
+        log.error("Unexpected error occurred: ", exception);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.buildError(
