@@ -21,9 +21,9 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class StudentService {
 
+    private final static String STUDENT_ID_PREFIX = "STU";
     private final StudentRepository repository;
 
     /**
@@ -33,21 +33,25 @@ public class StudentService {
      * @param studentRequest Student details from request
      * @return StudentResponseDTO with generated studentId
      */
+    @Transactional
     public StudentResponseDTO addStudent(StudentRequestDTO studentRequest) {
 
         log.info("Adding student: {}", studentRequest.getStudentName());
 
-        String studentId = generateStudentId();
-
         Student student = Student.builder()
-                .studentId(studentId)
                 .studentName(studentRequest.getStudentName())
                 .grade(studentRequest.getGrade())
                 .mobileNumber(studentRequest.getMobileNumber())
                 .schoolName(studentRequest.getSchoolName()).build();
 
         Student savedStudent = repository.save(student);
-        log.info("Saved student with ID : {}", savedStudent.getStudentId());
+
+        savedStudent.setStudentId(String.format("%s-%d-%03d", STUDENT_ID_PREFIX,
+                LocalDate.now().getYear(),
+                savedStudent.getId()));
+
+        Student updated = repository.save(savedStudent);
+        log.info("Saved student with ID : {}", updated.getStudentId());
         return toResponseDTO(savedStudent);
     }
 
@@ -75,12 +79,6 @@ public class StudentService {
         Student student = repository.findByStudentId(studentId)
                 .orElseThrow(() -> new StudentNotFoundException("Student not found with id : " + studentId));
         return toResponseDTO(student);
-    }
-
-    private String generateStudentId() {
-        int year = LocalDate.now().getYear();
-        long count = repository.count() + 1;
-        return String.format("STU-%d-%03d", year, count);
     }
 
     private StudentResponseDTO toResponseDTO(Student student) {
