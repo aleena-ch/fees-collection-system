@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+/**
+ * Service class for managing fee collection operations.
+ * Handles fee collection, receipt generation and retrieval.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -27,6 +31,18 @@ public class FeeService {
     private final FeeRepository feeRepository;
     private final StudentClient studentClient;
 
+    /**
+     * Collects fee for a student and generates receipt.
+     * Validates student exists via Student Service.
+     * Checks for duplicate fee payment.
+     * If Student Service is unavailable,
+     * a ServiceUnavailableException is thrown
+     * via the Feign fallback mechanism.
+     *
+     * @param feeRequestDto Fee details from request
+     * @return ReceiptResponseDTO with receipt number
+     * @throws DuplicateFeeException if fee already paid
+     */
     @Transactional
     public ReceiptResponseDTO collectFee(FeeRequestDTO feeRequestDto) {
 
@@ -44,6 +60,13 @@ public class FeeService {
         return toResponseDTO(updated);
     }
 
+    /**
+     * Retrieves a receipt by receipt number.
+     *
+     * @param receiptNumber Unique receipt identifier
+     * @return ReceiptResponseDTO if found
+     * @throws FeeNotFoundException if not found
+     */
     @Transactional(readOnly = true)
     public ReceiptResponseDTO getReceiptByNumber(String receiptNumber) {
 
@@ -53,6 +76,14 @@ public class FeeService {
         return toResponseDTO(feeReceipt);
     }
 
+    /**
+     * Retrieves all receipts for a student
+     * with pagination.
+     *
+     * @param studentId Student identifier
+     * @param pageable  Pagination parameters
+     * @return Page of ReceiptResponseDTO
+     */
     @Transactional(readOnly = true)
     public Page<ReceiptResponseDTO> getReceiptsByStudentId(String studentId, Pageable pageable) {
 

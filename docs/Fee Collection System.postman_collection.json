@@ -1,0 +1,549 @@
+{
+  "info": {
+    "_postman_id": "bb31ca1b-4d14-41dc-a4b7-5a15d7885968",
+    "name": "Fee Collection System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "9259494"
+  },
+  "item": [
+    {
+      "name": "Student-service",
+      "item": [
+        {
+          "name": "Create Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentName\": \"Kate Jane\",\n  \"grade\": \"Grade 1\",\n  \"mobileNumber\": \"+971501234563\",\n  \"schoolName\": \"Skiply School of Excellence\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validation - empty fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentName\": \"\",\n  \"grade\": \"\",\n  \"mobileNumber\": \"\",\n  \"schoolName\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get student by student ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students/STU-2026-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "STU-2026-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validation Get student by invalid student ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students/STU-2026-005",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "STU-2026-005"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get list of students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students?pageNumber=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "students"
+              ],
+              "query": [
+                {
+                  "key": "pageNumber",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fee-service",
+      "item": [
+        {
+          "name": "Get all reciepts for student",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/fees/receipt/student/STU-2026-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "receipt",
+                "student",
+                "STU-2026-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CollectFee - Card payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": \"STU-2026-001\",\n    \"feeType\": \"TUITION\",\n    \"feeDescription\": \"Tuition Fees - Grade 1\",\n    \"amount\": 500.00,\n    \"currency\": \"AED\",\n    \"paymentMode\": \"CARD\",\n    \"cardNumber\": \"1234-5678-1236-0081\",\n    \"cardType\": \"MASTERCARD\",\n    \"transactionReference\": \"132318047471\",\n    \"academicYear\": \"2026-27\",\n    \"feeMonth\": \"MAY\",\n    \"collectedBy\": \"Admin\",\n    \"remarks\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v1/fees/collect",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "collect"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CollectFee - Cash payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": \"STU-2026-001\",\n    \"feeType\": \"TUITION\",\n    \"feeDescription\": \"Tuition Fees - Grade 1\",\n    \"amount\": 500.00,\n    \"currency\": \"AED\",\n    \"paymentMode\": \"CARD\",\n    \"cardNumber\": \"1234-5678-1236-0081\",\n    \"cardType\": \"MASTERCARD\",\n    \"transactionReference\": \"132318047471\",\n    \"academicYear\": \"2026-27\",\n    \"feeMonth\": \"MAY\",\n    \"collectedBy\": \"Admin\",\n    \"remarks\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v1/fees/collect",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "collect"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validation - Duplicate Fee Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": \"STU-2026-001\",\n    \"feeType\": \"TUITION\",\n    \"feeDescription\": \"Tuition Fees - Grade 1\",\n    \"amount\": 500.00,\n    \"currency\": \"AED\",\n    \"paymentMode\": \"CARD\",\n    \"cardNumber\": \"1234-5678-1236-0081\",\n    \"cardType\": \"MASTERCARD\",\n    \"transactionReference\": \"132318047471\",\n    \"academicYear\": \"2026-27\",\n    \"feeMonth\": \"MAY\",\n    \"collectedBy\": \"Admin\",\n    \"remarks\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v1/fees/collect",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "collect"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validation - Invalid Amount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": \"STU-2026-001\",\n    \"feeType\": \"TUITION\",\n    \"feeDescription\": \"Tuition Fees - Grade 1\",\n    \"amount\": 500.00,\n    \"currency\": \"AED\",\n    \"paymentMode\": \"CARD\",\n    \"cardNumber\": \"1234-5678-1236-0081\",\n    \"cardType\": \"MASTERCARD\",\n    \"transactionReference\": \"132318047471\",\n    \"academicYear\": \"2026-27\",\n    \"feeMonth\": \"MAY\",\n    \"collectedBy\": \"Admin\",\n    \"remarks\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v1/fees/collect",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "collect"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid Student for Fee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"studentId\": \"STU-2026-008\",\n    \"feeType\": \"TUITION\",\n    \"feeDescription\": \"Tuition Fees - Grade 1\",\n    \"amount\": 500.00,\n    \"currency\": \"AED\",\n    \"paymentMode\": \"CARD\",\n    \"cardNumber\": \"1234-5678-1236-0081\",\n    \"cardType\": \"MASTERCARD\",\n    \"transactionReference\": \"132318047471\",\n    \"academicYear\": \"2026-27\",\n    \"feeMonth\": \"MAY\",\n    \"collectedBy\": \"Admin\",\n    \"remarks\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v1/fees/collect",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "collect"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get fees receipt",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/fees/receipt/RCP-2026-00001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "fees",
+                "receipt",
+                "RCP-2026-00001"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

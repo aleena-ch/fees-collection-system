@@ -1,0 +1,316 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Student Service API",
+    "description": "API for managing students in fee collection system",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/fees/collect": {
+      "post": {
+        "tags": [
+          "fee-controller"
+        ],
+        "operationId": "collectFee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeeRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceiptResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fees/receipt/{receiptNumber}": {
+      "get": {
+        "tags": [
+          "fee-controller"
+        ],
+        "operationId": "getReceiptByNumber",
+        "parameters": [
+          {
+            "name": "receiptNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceiptResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fees/receipt/student/{studentId}": {
+      "get": {
+        "tags": [
+          "fee-controller"
+        ],
+        "operationId": "getReceiptsByStudentId",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "studentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FeeRequestDTO": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "string"
+          },
+          "feeType": {
+            "type": "string",
+            "enum": [
+              "TUITION",
+              "EXAM",
+              "TRANSPORT",
+              "MISCELLANEOUS"
+            ]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "feeDescription": {
+            "type": "string"
+          },
+          "paymentMode": {
+            "type": "string",
+            "enum": [
+              "CASH",
+              "CARD",
+              "ONLINE"
+            ]
+          },
+          "cardNumber": {
+            "type": "string"
+          },
+          "cardType": {
+            "type": "string"
+          },
+          "transactionReference": {
+            "type": "string"
+          },
+          "academicYear": {
+            "type": "string"
+          },
+          "feeMonth": {
+            "type": "string"
+          },
+          "collectedBy": {
+            "type": "string"
+          },
+          "remarks": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "academicYear",
+          "amount",
+          "collectedBy",
+          "currency",
+          "feeDescription",
+          "feeMonth",
+          "feeType",
+          "paymentMode",
+          "studentId"
+        ]
+      },
+      "ReceiptResponseDTO": {
+        "type": "object",
+        "properties": {
+          "receiptNumber": {
+            "type": "string"
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "studentId": {
+            "type": "string"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "string"
+          },
+          "schoolName": {
+            "type": "string"
+          },
+          "mobileNumber": {
+            "type": "string"
+          },
+          "feeType": {
+            "type": "string",
+            "enum": [
+              "TUITION",
+              "EXAM",
+              "TRANSPORT",
+              "MISCELLANEOUS"
+            ]
+          },
+          "feeDescription": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "paymentMode": {
+            "type": "string",
+            "enum": [
+              "CASH",
+              "CARD",
+              "ONLINE"
+            ]
+          },
+          "cardNumber": {
+            "type": "string"
+          },
+          "cardType": {
+            "type": "string"
+          },
+          "transactionReference": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string",
+            "enum": [
+              "PAID",
+              "PENDING",
+              "FAILED"
+            ]
+          },
+          "academicYear": {
+            "type": "string"
+          },
+          "feeMonth": {
+            "type": "string"
+          },
+          "collectedBy": {
+            "type": "string"
+          },
+          "remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "PageMetadata": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PagedModel": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      }
+    }
+  }
+}

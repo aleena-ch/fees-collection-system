@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST Controller for managing fee collection.
+ */
 @RestController
 @RequestMapping("/api/v1/fees")
 @RequiredArgsConstructor
@@ -20,6 +23,13 @@ public class FeeController {
 
     private final FeeService feeService;
 
+    /**
+     * Collects fee for a student
+     * and generates receipt.
+     *
+     * @param feeRequestDto Fee payment details
+     * @return 201 Created with receipt details
+     */
     @PostMapping("/collect")
     public ResponseEntity<ReceiptResponseDTO> collectFee(@Valid @RequestBody FeeRequestDTO feeRequestDto) {
         log.info("Collecting fees for student: {}", feeRequestDto.getStudentId());
@@ -28,6 +38,12 @@ public class FeeController {
                 .body(response);
     }
 
+    /**
+     * Retrieves a receipt by receipt number.
+     *
+     * @param receiptNumber Unique receipt number
+     * @return 200 OK with receipt details
+     */
     @GetMapping("/receipt/{receiptNumber}")
     public ResponseEntity<ReceiptResponseDTO> getReceiptByNumber(@PathVariable String receiptNumber) {
         log.info("Getting receipt by number: {}", receiptNumber);
@@ -35,6 +51,15 @@ public class FeeController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Retrieves all receipts for a student
+     * with pagination.
+     *
+     * @param studentId  Student identifier
+     * @param pageNumber Page number (default 0)
+     * @param size       Page size (default 10)
+     * @return 200 OK with page of receipts
+     */
     @GetMapping("/receipt/student/{studentId}")
     public ResponseEntity<Page<ReceiptResponseDTO>> getReceiptsByStudentId(
             @RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int size, @PathVariable String studentId) {

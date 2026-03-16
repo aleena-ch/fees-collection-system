@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+/**
+ * Service class for managing student operations.
+ * Handles creation and retrieval of student records.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -22,6 +26,13 @@ public class StudentService {
 
     private final StudentRepository repository;
 
+    /**
+     * Adds a new student to the system.
+     * Generates unique student ID using DB sequence.
+     *
+     * @param studentRequest Student details from request
+     * @return StudentResponseDTO with generated studentId
+     */
     public StudentResponseDTO addStudent(StudentRequestDTO studentRequest) {
 
         log.info("Adding student: {}", studentRequest.getStudentName());
@@ -40,12 +51,25 @@ public class StudentService {
         return toResponseDTO(savedStudent);
     }
 
+    /**
+     * Retrieves all students with pagination.
+     *
+     * @param pageable Pagination parameters
+     * @return Page of StudentResponseDTO
+     */
     @Transactional(readOnly = true)
     public Page<StudentResponseDTO> getAllStudentsDetails(Pageable pageable) {
         Page<Student> students = repository.findAll(pageable);
         return students.map(this::toResponseDTO);
     }
 
+    /**
+     * Retrieves a student by their unique student ID.
+     *
+     * @param studentId Unique student identifier
+     * @return StudentResponseDTO if found
+     * @throws StudentNotFoundException if not found
+     */
     @Transactional(readOnly = true)
     public StudentResponseDTO getStudentById(String studentId) {
         Student student = repository.findByStudentId(studentId)
@@ -60,7 +84,7 @@ public class StudentService {
     }
 
     private StudentResponseDTO toResponseDTO(Student student) {
-        StudentResponseDTO responseDTO = StudentResponseDTO.builder()
+        return StudentResponseDTO.builder()
                 .studentId(student.getStudentId())
                 .studentName(student.getStudentName())
                 .grade(student.getGrade())
@@ -68,6 +92,5 @@ public class StudentService {
                 .schoolName(student.getSchoolName())
                 .createdAt(student.getCreatedAt())
                 .build();
-        return responseDTO;
     }
 }
