@@ -36,7 +36,7 @@ API Gateway (8080)
 ### Steps
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourname/fee-collection-system.git
+git clone https://github.com/aleena-ch/fees-collection-system
 
 # 2. Start Student Service
 cd student-service
